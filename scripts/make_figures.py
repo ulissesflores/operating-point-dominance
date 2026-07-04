@@ -46,14 +46,16 @@ def main() -> None:
 
     # fig1 — class distribution (log scale; linear bars are unreadable at 0.17%)
     n_pos = int(y_te.sum())
-    fig, ax = plt.subplots(figsize=(5, 3.2))
+    fig, ax = plt.subplots(figsize=(5.5, 3.4))
     counts = [int((y_te == 0).sum()), n_pos]
-    ax.bar(["legítimas (0)", "fraudes (1)"], counts, color=["#4878a8", "#c44e52"])
+    ax.bar(["legítimas (0)", "fraudes (1)"], counts, color=["#4878a8", "#c44e52"],
+           width=0.55)
     ax.set_yscale("log")
+    ax.set_ylim(top=max(counts) * 12)  # headroom so labels never collide with the frame
     for i, v in enumerate(counts):
-        ax.text(i, v * 1.15, f"{v:,}".replace(",", "."), ha="center", fontsize=9)
+        ax.text(i, v * 1.6, f"{v:,}".replace(",", "."), ha="center", va="bottom",
+                fontsize=10)
     ax.set_ylabel("contagem (escala log)")
-    ax.set_title(f"Conjunto de teste: prevalência {y_te.mean() * 100:.3f}%")
     save(fig, "fig1_class_distribution")
 
     # fig2 — PR curves (test) for the 4 models
@@ -68,7 +70,6 @@ def main() -> None:
         ax.plot(r, p, label=f"{name} (AUC-PR={ap:.3f})", linewidth=1.6)
     ax.set_xlabel("Recall")
     ax.set_ylabel("Precisão")
-    ax.set_title("Curvas Precisão-Revocação — teste")
     ax.legend(fontsize=8, loc="lower left")
     save(fig, "fig2_pr_curves_test")
 
@@ -98,7 +99,6 @@ def main() -> None:
                label=f"τ*={t_unc:.4f} sem censura (F1={f1_unc:.3f})")
     ax.set_xlabel("limiar de decisão")
     ax.set_ylabel("F1 (classe positiva)")
-    ax.set_title("Varredura de limiar — MLP: o efeito do ponto de operação")
     ax.legend(fontsize=7.5, loc="upper left")
     save(fig, "fig3_threshold_sweep")
 
@@ -116,10 +116,9 @@ def main() -> None:
             for j in range(2):
                 ax.text(j, i, f"{m[i, j]:,}".replace(",", "."), ha="center", va="center",
                         fontsize=10, color="black")
+        ax.set_title(title, fontsize=10)
         ax.set_xticks([0, 1], ["prev. 0", "prev. 1"])
         ax.set_yticks([0, 1], ["real 0", "real 1"])
-        ax.set_title(title, fontsize=10)
-    fig.suptitle("Matrizes de confusão nos dois pontos de operação", fontsize=11)
     save(fig, "fig4_confusion_shift")
 
     # fig5 — analytical prior sensitivity at fixed operating point (+ MC check dots)
@@ -137,9 +136,8 @@ def main() -> None:
         ys = [r["f1"] for r in mc if r["model"].startswith(name)]
         ax.scatter(xs, ys, s=18, zorder=3)
     ax.set_xlabel("prevalência π (ponto de operação fixo)")
-    ax.set_ylabel("F1(π) — forma fechada; pontos = verificação Monte Carlo")
+    ax.set_ylabel("F1(π)")
     ax.set_ylim(0, 1)
-    ax.set_title("Sensibilidade mecânica do F1 à prevalência")
     ax.legend(fontsize=8)
     save(fig, "fig5_prior_shift")
 
@@ -150,7 +148,6 @@ def main() -> None:
     vals = [r["importance"] for r in imp][::-1]
     ax.barh(feats, vals, color="#4878a8")
     ax.set_xlabel("queda média de F1 ao permutar (validação)")
-    ax.set_title("Importância por permutação — MLP (top 20)")
     save(fig, "fig6_permutation_importance")
 
     # fig7 — bootstrap distribution of the paired F1 difference (MLP - LR),
@@ -183,7 +180,6 @@ def main() -> None:
     ax.axvline(hi_ci, color="#c44e52", linestyle="--", linewidth=1.2)
     ax.set_xlabel("ΔF1 = F1(MLP) − F1(LR), bootstrap pareado do teste")
     ax.set_ylabel("frequência")
-    ax.set_title("O empate dentro do ruído: ΔF1 MLP−LR")
     ax.legend(fontsize=8)
     save(fig, "fig7_bootstrap_delta")
 

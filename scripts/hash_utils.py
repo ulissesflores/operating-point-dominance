@@ -15,6 +15,7 @@ import hashlib
 import json
 import platform
 import subprocess
+import sys
 from collections.abc import Iterable
 from pathlib import Path
 
@@ -89,11 +90,27 @@ def write_checksums_sha256(file_paths: Iterable[Path], out_path: Path) -> dict[s
 
 
 def get_pip_freeze() -> list[str]:
-    """Return pip freeze output lines for environment traceability."""
+    """Return installed-package pins for environment traceability.
+
+    Uses importlib.metadata (no subprocess): robust in uv/venv environments where
+    the `pip` module itself is absent (audit finding: silent empty pip_freeze).
+    """
     try:
-        output = subprocess.check_output(["pip", "freeze"], stderr=subprocess.DEVNULL).decode(
-            "utf-8"
+        import importlib.metadata as _md
+
+        pins = sorted(
+            f"{d.metadata['Name']}=={d.version}"
+            for d in _md.distributions()
+            if d.metadata and d.metadata.get("Name")
         )
+        if pins:
+            return pins
+    except Exception:
+        pass
+    try:
+        output = subprocess.check_output(
+            [sys.executable, "-m", "pip", "freeze"], stderr=subprocess.DEVNULL
+        ).decode("utf-8")
         return [line.strip() for line in output.splitlines() if line.strip()]
     except Exception:
         return []

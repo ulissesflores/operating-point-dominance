@@ -1,5 +1,5 @@
 {
-  "title": "Operating-Point Dominance in Credit-Card Fraud Detection — paper + replication package",
+  "title": "O limiar importa mais que o modelo: dominância do ponto de operação na detecção de fraude em cartões — paper + replication package",
   "description": "Estudo de caso confirmatório e auditável no benchmark ULB/Worldline: decomposição do desempenho operacional em efeito do ponto de operação (limiar de decisão) versus efeito da escolha de arquitetura (MLP, Regressão Logística, Autoencoder, Isolation Forest), sob protocolo sem vazamento de pré-processamento, com bootstrap pareado, estudo multi-seed de variância de treino, forense de protocolo (censura de grade de limiares; defeito de prior-shift) e reprodutibilidade determinística verificada (manifest + SHA-256). Paper em português (PT-BR) com abstract em inglês.",
   "creators": [
     {
@@ -28,5 +28,6 @@
       "identifier": "https://github.com/ulissesflores/fraud-detection-mlp-operating-point",
       "resource_type": "software"
     }
-  ]
+  ],
+  "notes": "Dual licensing: source code under Apache-2.0 (deposit license); paper text and figures under CC BY 4.0."
 }
