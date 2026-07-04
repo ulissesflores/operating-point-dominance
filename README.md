@@ -1,100 +1,102 @@
 # Operating-Point Dominance in Credit-Card Fraud Detection
 
-<!-- DOI Zenodo: inserir o badge após o mint (Wave 2) -->
+<!-- Zenodo DOI badge: insert after minting (Wave 2) -->
 <!-- [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.TBD.svg)](https://doi.org/10.5281/zenodo.TBD) -->
 [![License: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue.svg)](LICENSE)
 [![License: CC BY 4.0](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](pyproject.toml)
 [![Tests](https://img.shields.io/badge/tests-18%2F18-brightgreen.svg)](tests/)
 
-*Estudo de caso confirmatório e auditável no benchmark ULB/Worldline: quanto do desempenho
-operacional de um detector de fraude vem da arquitetura — e quanto vem do ponto de operação.*
+*A confirmatory, auditable case study on the ULB/Worldline benchmark: how much of a fraud
+detector's operational performance comes from the architecture — and how much from the
+operating point.*
 
-**Paper (PT-BR, APA 7):** [`docs/paper/paper-final.pdf`](docs/paper/paper-final.pdf) ·
+**Paper (Portuguese, APA 7):** [`docs/paper/paper-final.pdf`](docs/paper/paper-final.pdf) ·
 [`docs/paper/paper-final.docx`](docs/paper/paper-final.docx)
 
 ## What this contributes
 
-1. **Decomposição auditável dos efeitos.** Com bootstrap pareado (10.000 réplicas) e um
-   estudo de variância de treino (20 sementes), mede-se que mover o limiar de decisão do
-   MLP de 0,5 para o ótimo de validação (τ*=0,9994) desloca o F1 de teste em **+0,545**
-   (0,267 → 0,812), enquanto trocar MLP por Regressão Logística desloca **−0,007**
-   (IC 95% [−0,055; +0,042]) — menor que o desvio-padrão de treino do próprio MLP (0,016).
-2. **Forense de protocolo.** Uma aparente vitória do MLP com significância
-   (ΔF1 = +0,053, IC excluindo zero) é demonstrada como **artefato da grade de limiares
-   truncada em 0,99** herdada do material precedente; e o teste de prior-shift original é
-   refutado (defeito de reamostragem travava a prevalência efetiva em ~0,2%).
-3. **Protocolo sem vazamento de pré-processamento, reproduzível bit a bit:** scaler
-   ajustado só no treino, reponderação de custo (sem oversampling sintético), limiar
-   selecionado só em validação, dados ancorados por SHA-256, determinismo verificado por
-   re-execução idêntica e invariantes cobertos por testes.
+1. **An auditable decomposition of effects.** With a paired bootstrap (10,000 replicates)
+   and a 20-seed training-variance study, moving the MLP decision threshold from the 0.5
+   default to the validation optimum (τ\*=0.9994) shifts test F1 by **+0.545**
+   (0.267 → 0.812), while switching from MLP to Logistic Regression shifts **−0.007**
+   (95% CI [−0.055; +0.042]) — smaller than the MLP's own training standard deviation (0.016).
+2. **Protocol forensics.** An apparent statistically significant MLP win
+   (ΔF1 = +0.053, CI excluding zero) is shown to be an **artifact of the threshold grid
+   truncated at 0.99** inherited from the precedent material; and that material's
+   prevalence-robustness test is refuted (a resampling defect locked effective prevalence
+   at ~0.2%).
+3. **A leakage-free, bit-reproducible protocol:** scaler fitted on the training split only,
+   cost reweighting (no synthetic oversampling), threshold selected on validation only,
+   SHA-256-anchored data, determinism verified by identical re-execution, and protocol
+   invariants covered by tests.
 
 ## Model at a glance
 
-| Item | Valor |
+| Item | Value |
 |---|---|
-| Dataset | ULB/Worldline `creditcard.csv` (284.807 transações; 0,173% fraudes; SHA-256 `76274b69…a89`) |
-| Partição | 70/15/15 estratificada, semente 42 (199.364 / 42.721 / 42.722) |
-| Modelos | MLP 30-64-32-1 (BatchNorm, Dropout 0,2, pos_weight≈578,5) · LR balanced · Autoencoder · Isolation Forest |
-| Seleção de limiar | validação apenas; dois regimes reportados (grade v3.2 censurada + curva PR sem censura) |
-| Inferência | bootstrap pareado 10.000×; multi-seed 20×; forma fechada prec(π) para prior-shift |
-| Determinismo | thread única + algoritmos determinísticos; 2 runs completos idênticos |
+| Dataset | ULB/Worldline `creditcard.csv` (284,807 transactions; 0.173% fraud; SHA-256 `76274b69…a89`) |
+| Split | Stratified 70/15/15, seed 42 (199,364 / 42,721 / 42,722) |
+| Models | MLP 30-64-32-1 (BatchNorm, Dropout 0.2, pos_weight≈578.5) · balanced LR · Autoencoder · Isolation Forest |
+| Threshold selection | Validation only; two regimes reported (censored v3.2 grid + uncensored PR-curve) |
+| Inference | Paired bootstrap 10,000×; 20-seed retraining; closed-form prec(π) for prior shift |
+| Determinism | Single-threaded + deterministic algorithms; two identical full runs |
 
 ## Quick start
 
 ```bash
 python3.11 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-python run_all.py            # baixa+verifica dados, roda o experimento, figuras, manifest
-pytest tests/ -q             # 18 invariantes de dados/protocolo/resultados
+python run_all.py            # downloads+verifies data, runs the experiment, figures, manifest
+pytest tests/ -q             # 18 data/protocol/results invariants
 ```
 
 ## Five-step replication protocol
 
-1. `python scripts/get_data.py` — baixa `creditcard.csv` (mirror público) e **verifica o
-   SHA-256** contra o hash do estudo original; aborta em divergência.
-2. `python scripts/run_experiment.py` — protocolo completo (4 modelos, 2 regimes de limiar,
-   bootstrap pareado, prior-shift em forma fechada) → `output/results.json`.
-3. `python scripts/verify_original_priorshift_bug.py` — replay forense das duas variantes do
-   stress test (defeituosa vs corrigida) sobre as pontuações salvas.
-4. `python scripts/multiseed_mlp.py --n-seeds 20` — variância de treino do MLP
+1. `python scripts/get_data.py` — downloads `creditcard.csv` (public mirror) and **verifies
+   its SHA-256** against the original study's hash; aborts on mismatch.
+2. `python scripts/run_experiment.py` — full protocol (4 models, 2 threshold regimes,
+   paired bootstrap, closed-form prior-shift) → `output/results.json`.
+3. `python scripts/verify_original_priorshift_bug.py` — forensic replay of both stress-test
+   variants (defective vs. corrected) on the saved scores.
+4. `python scripts/multiseed_mlp.py --n-seeds 20` — MLP training variance
    (~25 min CPU) → `output/multiseed_mlp.json`.
-5. `python scripts/make_figures.py && (cd scripts && python make_run.py)` — figuras
-   vetoriais (PDF+SVG) e o contrato de run (`runs/<id>/manifest.json` + `checksums.sha256`).
+5. `python scripts/make_figures.py && (cd scripts && python make_run.py)` — vector figures
+   (PDF+SVG) and the run contract (`runs/<id>/manifest.json` + `checksums.sha256`).
 
-Re-executar os passos 2–5 na mesma plataforma reproduz todos os números bit a bit
-(verificado em duas execuções completas independentes).
+Re-running steps 2–5 on the same platform reproduces every number bit-for-bit
+(verified across two independent full executions).
 
 ## Results (seed 42, test split)
 
-| Modelo @ limiar | Precisão | Revocação | F1 |
+| Model, threshold | Precision | Recall | F1 |
 |---|---|---|---|
-| MLP @ 0,50 (default) | 0,157 | 0,878 | 0,267 |
-| MLP @ τ*=0,9994 | 0,875 | 0,757 | **0,812** |
-| LR @ τ*≈1,0 | 0,931 | 0,730 | **0,818** |
-| Autoencoder @ F1-ótimo | 0,769 | 0,405 | 0,531 |
-| Isolation Forest @ F1-ótimo | 0,112 | 0,459 | 0,179 |
+| MLP, 0.50 (default) | 0.157 | 0.878 | 0.267 |
+| MLP, τ\*=0.9994 | 0.875 | 0.757 | **0.812** |
+| LR, τ\*≈1.0 | 0.931 | 0.730 | **0.818** |
+| Autoencoder, F1-optimal | 0.769 | 0.405 | 0.531 |
+| Isolation Forest, F1-optimal | 0.112 | 0.459 | 0.179 |
 
-ΔF1(MLP−LR) = −0,007 [−0,055; +0,042]; ΔAUC-PR = −0,046 [−0,111; +0,005] — ambos
-indistinguíveis de zero. MLP sobre 20 sementes: 0,814 ± 0,016 (a LR determinística cai
-dentro da distribuição do MLP). Números completos em [`output/results.json`](output/results.json).
+ΔF1(MLP−LR) = −0.007 [−0.055; +0.042]; ΔAUC-PR = −0.046 [−0.111; +0.005] — both
+indistinguishable from zero. MLP across 20 seeds: 0.814 ± 0.016 (the deterministic LR falls
+inside the MLP's own distribution). Full numbers in [`output/results.json`](output/results.json).
 
 ## Layout
 
 ```
-docs/paper/       paper-final.pdf + paper-final.docx (APA 7, PT-BR)
-docs/source/      notebook arquivistico v3.2 do estudo precedente (SHA-256 131b5af0...)
-configs/run.json  todos os hiperparametros e contratos do protocolo
-scripts/          experimento, multiseed, forense, figuras, manifest, hashing
-tests/            18 invariantes (dados, protocolo anti-vazamento, resultados)
-output/           results.json, scores brutos (npz), tabelas CSV, figuras PDF+SVG+PNG
-runs/<id>/        manifest.json + checksums.sha256 (contrato de run)
-schema/           schemas do manifest e do dataset
+docs/paper/       paper-final.pdf + paper-final.docx (APA 7, Portuguese)
+docs/source/      archival v3.2 notebook of the precedent study (SHA-256 131b5af0...)
+configs/run.json  every hyperparameter and protocol contract
+scripts/          experiment, multiseed, forensics, figures, manifest, hashing
+tests/            18 invariants (data, anti-leakage protocol, results)
+output/           results.json, raw scores (npz), CSV tables, PDF+SVG+PNG figures
+runs/<id>/        manifest.json + checksums.sha256 (run contract)
+schema/           manifest and dataset schemas
 ```
 
 ## Citation
 
-<!-- Após o mint do DOI no Zenodo, atualizar CITATION.cff e o BibTeX abaixo. -->
+<!-- After minting the Zenodo DOI, update CITATION.cff and the BibTeX below. -->
 
 ```bibtex
 @misc{flores2026operatingpoint,
@@ -102,17 +104,17 @@ schema/           schemas do manifest e do dataset
   title  = {Ponto de opera{\c c}{\~a}o, protocolo e a fragilidade do ranking de
             arquiteturas na detec{\c c}{\~a}o de fraude em cart{\~o}es},
   year   = {2026},
-  note   = {Codex Hash Research Laboratory. DOI Zenodo a ser cunhado},
+  note   = {Codex Hash Research Laboratory. Zenodo DOI to be minted},
 }
 ```
 
-Metadados machine-readable: [`CITATION.cff`](CITATION.cff) · [`codemeta.json`](codemeta.json) ·
+Machine-readable metadata: [`CITATION.cff`](CITATION.cff) · [`codemeta.json`](codemeta.json) ·
 [`.zenodo.json`](.zenodo.json).
 
 ## License
 
-- **Código** (`scripts/`, `tests/`, `run_all.py`): [Apache-2.0](LICENSE)
-- **Conteúdo** (paper, figuras, documentação): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+- **Code** (`scripts/`, `tests/`, `run_all.py`): [Apache-2.0](LICENSE)
+- **Content** (paper, figures, documentation): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ## Anchor references
 
