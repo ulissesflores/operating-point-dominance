@@ -1,0 +1,32 @@
+{
+  "title": "Operating-Point Dominance in Credit-Card Fraud Detection — paper + replication package",
+  "description": "Estudo de caso confirmatório e auditável no benchmark ULB/Worldline: decomposição do desempenho operacional em efeito do ponto de operação (limiar de decisão) versus efeito da escolha de arquitetura (MLP, Regressão Logística, Autoencoder, Isolation Forest), sob protocolo sem vazamento de pré-processamento, com bootstrap pareado, estudo multi-seed de variância de treino, forense de protocolo (censura de grade de limiares; defeito de prior-shift) e reprodutibilidade determinística verificada (manifest + SHA-256). Paper em português (PT-BR) com abstract em inglês.",
+  "creators": [
+    {
+      "name": "Flores, Carlos Ulisses",
+      "affiliation": "Codex Hash Research Laboratory, Codex Hash Ltda., Brazil",
+      "orcid": "0000-0002-6034-7765"
+    }
+  ],
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "Apache-2.0",
+  "keywords": [
+    "fraud detection",
+    "rare class",
+    "operating point",
+    "cost-sensitive learning",
+    "data leakage",
+    "reproducibility",
+    "credit card fraud",
+    "class imbalance"
+  ],
+  "language": "por",
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": "https://github.com/ulissesflores/fraud-detection-mlp-operating-point",
+      "resource_type": "software"
+    }
+  ]
+}

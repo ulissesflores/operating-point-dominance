@@ -1,0 +1,54 @@
+{
+  "buggy_v32": [
+    {
+      "target": 0.01,
+      "achieved_prevalence": 0.0017465599848946163,
+      "f1": 0.7702702702702703,
+      "n_pos_drawn": 74
+    },
+    {
+      "target": 0.05,
+      "achieved_prevalence": 0.0018199704869650763,
+      "f1": 0.7755102040816326,
+      "n_pos_drawn": 74
+    },
+    {
+      "target": 0.1,
+      "achieved_prevalence": 0.0019208804900841033,
+      "f1": 0.7755102040816326,
+      "n_pos_drawn": 74
+    },
+    {
+      "target": 0.2,
+      "achieved_prevalence": 0.0021604577834870957,
+      "f1": 0.7862068965517242,
+      "n_pos_drawn": 74
+    }
+  ],
+  "corrected": [
+    {
+      "target": 0.01,
+      "achieved_prevalence": 0.009994850428350733,
+      "f1": 0.8676844783715013,
+      "n_pos_drawn": 427
+    },
+    {
+      "target": 0.05,
+      "achieved_prevalence": 0.04999765928561397,
+      "f1": 0.8890036138358286,
+      "n_pos_drawn": 2136
+    },
+    {
+      "target": 0.1,
+      "achieved_prevalence": 0.09999531857122794,
+      "f1": 0.8921606612424126,
+      "n_pos_drawn": 4272
+    },
+    {
+      "target": 0.2,
+      "achieved_prevalence": 0.19999063714245588,
+      "f1": 0.894284791733936,
+      "n_pos_drawn": 8544
+    }
+  ]
+}

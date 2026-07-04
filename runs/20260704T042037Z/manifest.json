@@ -1,0 +1,152 @@
+{
+  "run_id": "20260704T042037Z",
+  "created_utc": "2026-07-04T04:20:37.790284+00:00",
+  "git": {
+    "repository_url": "https://github.com/ulissesflores/research-lab (fabrica/artigos/2025-fraud-detection-mlp)",
+    "commit": "7cf41d3ce5b4011318cf9cdaf2123dbaf1e6720c",
+    "tag": null
+  },
+  "environment": {
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "python_version": "3.11.15",
+    "python_implementation": "CPython",
+    "architecture": "arm64",
+    "pip_freeze": []
+  },
+  "parameters": {
+    "dataset": {
+      "path": "data/creditcard.csv",
+      "sha256_expected": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89",
+      "n_rows_expected": 284807,
+      "n_cols_expected": 31
+    },
+    "seed": 42,
+    "split": {
+      "test_size_tmp": 0.3,
+      "val_test_ratio": 0.5,
+      "stratify": true
+    },
+    "mlp": {
+      "hidden": [
+        64,
+        32
+      ],
+      "p_drop": 0.2,
+      "epochs": 40,
+      "batch_size": 512,
+      "lr": 0.001,
+      "loss": "BCEWithLogitsLoss(pos_weight=n_neg/n_pos)",
+      "model_selection": "best F1@0.5 on validation"
+    },
+    "autoencoder": {
+      "bottleneck": 8,
+      "encoder": [
+        64,
+        32
+      ],
+      "epochs": 40,
+      "batch_size": 512,
+      "lr": 0.001,
+      "train_on": "negatives only (train split)"
+    },
+    "logistic_regression": {
+      "max_iter": 200,
+      "class_weight": "balanced",
+      "solver": "liblinear"
+    },
+    "isolation_forest": {
+      "n_estimators": 200,
+      "contamination": "auto",
+      "random_state": 42,
+      "train_on": "negatives only (train split)"
+    },
+    "thresholds": {
+      "grid": "np.linspace(0.01, 0.99, 99)",
+      "percentile_grid": "np.linspace(50, 99.9, 80)",
+      "selection": "argmax F1 (and Fbeta=2) on validation"
+    },
+    "prior_shift": {
+      "ratios": [
+        0.01,
+        0.05,
+        0.1,
+        0.2
+      ],
+      "method": "resample test set with replacement to target prevalence"
+    },
+    "permutation_importance": {
+      "n_repeats": 5,
+      "random_state": 42,
+      "scoring": "f1",
+      "on": "validation"
+    },
+    "bootstrap": {
+      "n_replicates": 10000,
+      "level": 0.95,
+      "random_state": 42,
+      "on": "test set (paired resampling of indices)"
+    },
+    "determinism": {
+      "torch_num_threads": 1,
+      "torch_deterministic_algorithms": true,
+      "note": "engineering deviation from the original Colab notebook (which did not pin threads); required so that re-running this repo reproduces identical hashes"
+    }
+  },
+  "dataset_sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89",
+  "artifacts": {
+    "code": [
+      "scripts/eeat_score.py",
+      "scripts/hash_utils.py",
+      "scripts/make_figures.py",
+      "scripts/make_run.py",
+      "scripts/multiseed_mlp.py",
+      "scripts/quality_checks.py",
+      "scripts/run_experiment.py",
+      "scripts/verify_original_priorshift_bug.py"
+    ],
+    "config": [
+      "configs/run.json"
+    ],
+    "results": [
+      "output/results.json",
+      "output/scores_test.npz",
+      "output/priorshift_bug_verification.json"
+    ],
+    "tables": [
+      "output/tables/table1_model_comparison.csv",
+      "output/tables/table2_confusion_matrices.csv",
+      "output/tables/table3_prior_shift.csv",
+      "output/tables/table4_permutation_importance.csv"
+    ],
+    "figures": [
+      "output/figures/fig1_class_distribution.pdf",
+      "output/figures/fig1_class_distribution.png",
+      "output/figures/fig1_class_distribution.svg",
+      "output/figures/fig2_pr_curves_test.pdf",
+      "output/figures/fig2_pr_curves_test.png",
+      "output/figures/fig2_pr_curves_test.svg",
+      "output/figures/fig3_threshold_sweep.pdf",
+      "output/figures/fig3_threshold_sweep.png",
+      "output/figures/fig3_threshold_sweep.svg",
+      "output/figures/fig4_confusion_shift.pdf",
+      "output/figures/fig4_confusion_shift.png",
+      "output/figures/fig4_confusion_shift.svg",
+      "output/figures/fig5_prior_shift.pdf",
+      "output/figures/fig5_prior_shift.png",
+      "output/figures/fig5_prior_shift.svg",
+      "output/figures/fig6_permutation_importance.pdf",
+      "output/figures/fig6_permutation_importance.png",
+      "output/figures/fig6_permutation_importance.svg",
+      "output/figures/fig7_bootstrap_delta.pdf",
+      "output/figures/fig7_bootstrap_delta.png",
+      "output/figures/fig7_bootstrap_delta.svg"
+    ]
+  },
+  "artifacts_external": {
+    "data": [
+      "data/creditcard.csv"
+    ],
+    "note": "creditcard.csv is not committed (144 MB); integrity anchored by dataset_sha256"
+  },
+  "notes": "re-seal after human review: figs 3/4 aligned to primary regime, paper corrections (98.9->99.2, prior-shift operating point declared), embedded figures"
+}

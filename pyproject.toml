@@ -1,0 +1,20 @@
+[project]
+name = "fraud-detection-mlp-operating-point"
+version = "1.0.0"
+description = "Replication package: operating-point dominance in credit-card fraud detection (ULB/Worldline benchmark)"
+authors = [{ name = "Carlos Ulisses Flores" }]
+requires-python = ">=3.11,<3.12"
+license = { text = "Apache-2.0" }
+dependencies = [
+  "torch==2.6.0",
+  "scikit-learn==1.6.1",
+  "pandas==2.2.2",
+  "numpy==2.0.2",
+  "matplotlib==3.11.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.1.1", "ruff"]
+
+[tool.ruff]
+line-length = 100
