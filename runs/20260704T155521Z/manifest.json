@@ -1,9 +1,9 @@
 {
-  "run_id": "20260704T151229Z",
-  "created_utc": "2026-07-04T15:12:29.771609+00:00",
+  "run_id": "20260704T155521Z",
+  "created_utc": "2026-07-04T15:55:21.311480+00:00",
   "git": {
     "repository_url": "https://github.com/ulissesflores/research-lab (fabrica/artigos/2025-fraud-detection-mlp)",
-    "commit": "b689b3f513b7b807c170fd8f35a91a4d1b695efa",
+    "commit": "766c2c6e0d8b4cfc03981da9cfe12711d9185dcd",
     "tag": null
   },
   "environment": {
@@ -147,5 +147,5 @@
     ],
     "note": "creditcard.csv is not committed (144 MB); integrity anchored by dataset_sha256"
   },
-  "notes": "final publication run: APA7 exports, standard-compliant figures"
+  "notes": "final: house-standard APA7 exports, new title, keep-together layout"
 }

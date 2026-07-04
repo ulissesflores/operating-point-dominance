@@ -21,7 +21,7 @@ keywords:
   - reproducibility
 preferred-citation:
   type: article
-  title: "Ponto de operação, protocolo e a fragilidade do ranking de arquiteturas na detecção de fraude em cartões: um estudo de caso confirmatório e auditável no benchmark ULB/Worldline"
+  title: "O limiar importa mais que o modelo: dominância do ponto de operação na detecção de fraude em cartões: um estudo de caso confirmatório e auditável no benchmark ULB/Worldline"
   authors:
     - family-names: "Flores"
       given-names: "Carlos Ulisses"

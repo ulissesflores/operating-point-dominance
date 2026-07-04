@@ -101,8 +101,8 @@ schema/           manifest and dataset schemas
 ```bibtex
 @misc{flores2026operatingpoint,
   author = {Flores, Carlos Ulisses},
-  title  = {Ponto de opera{\c c}{\~a}o, protocolo e a fragilidade do ranking de
-            arquiteturas na detec{\c c}{\~a}o de fraude em cart{\~o}es},
+  title  = {O limiar importa mais que o modelo: domin{\^a}ncia do ponto de
+            opera{\c c}{\~a}o na detec{\c c}{\~a}o de fraude em cart{\~o}es},
   year   = {2026},
   note   = {Codex Hash Research Laboratory. Zenodo DOI to be minted},
 }
