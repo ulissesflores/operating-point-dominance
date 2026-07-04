@@ -10,9 +10,8 @@
 *Estudo de caso confirmatório e auditável no benchmark ULB/Worldline: quanto do desempenho
 operacional de um detector de fraude vem da arquitetura — e quanto vem do ponto de operação.*
 
-**Paper (PT-BR):** [`docs/paper/paper-final.md`](docs/paper/paper-final.md) ·
-**Auditoria de qualidade:** [`docs/paper/AUDIT-2026-07-04.md`](docs/paper/AUDIT-2026-07-04.md) ·
-**Proveniência:** [`docs/provenance.md`](docs/provenance.md)
+**Paper (PT-BR, APA 7):** [`docs/paper/paper-final.pdf`](docs/paper/paper-final.pdf) ·
+[`docs/paper/paper-final.docx`](docs/paper/paper-final.docx)
 
 ## What this contributes
 
@@ -83,25 +82,15 @@ dentro da distribuição do MLP). Números completos em [`output/results.json`](
 ## Layout
 
 ```
-docs/paper/       paper-final.md (com figuras) + AUDIT (rubrica 966/1000)
-docs/source/      notebook arquivístico v3.2 do estudo precedente (SHA-256 131b5af0…)
-docs/provenance.md  reconciliação texto↔código do material precedente
-configs/run.json  todos os hiperparâmetros e contratos do protocolo
+docs/paper/       paper-final.pdf + paper-final.docx (APA 7, PT-BR)
+docs/source/      notebook arquivistico v3.2 do estudo precedente (SHA-256 131b5af0...)
+configs/run.json  todos os hiperparametros e contratos do protocolo
 scripts/          experimento, multiseed, forense, figuras, manifest, hashing
 tests/            18 invariantes (dados, protocolo anti-vazamento, resultados)
 output/           results.json, scores brutos (npz), tabelas CSV, figuras PDF+SVG+PNG
-runs/<id>/        manifest.json + checksums.sha256 (contrato de run audit-grade)
+runs/<id>/        manifest.json + checksums.sha256 (contrato de run)
 schema/           schemas do manifest e do dataset
 ```
-
-## Documentation
-
-- [`docs/provenance.md`](docs/provenance.md) — por que este repo reanalisa (e corrige) o
-  material precedente do próprio autor; o notebook original acompanha como material
-  arquivístico com hash.
-- [`docs/paper/AUDIT-2026-07-04.md`](docs/paper/AUDIT-2026-07-04.md) — auditoria de
-  qualidade (estrutura, densidade, fundamentação, originalidade, consistência, correção
-  factual) com evidência por sub-critério.
 
 ## Citation
 

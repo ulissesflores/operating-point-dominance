@@ -1,9 +1,9 @@
 {
-  "run_id": "20260704T042037Z",
-  "created_utc": "2026-07-04T04:20:37.790284+00:00",
+  "run_id": "20260704T131901Z",
+  "created_utc": "2026-07-04T13:19:01.206741+00:00",
   "git": {
     "repository_url": "https://github.com/ulissesflores/research-lab (fabrica/artigos/2025-fraud-detection-mlp)",
-    "commit": "7cf41d3ce5b4011318cf9cdaf2123dbaf1e6720c",
+    "commit": "0edb9ac5f0dc8c199d898ef195deba419e5facb5",
     "tag": null
   },
   "environment": {
@@ -95,12 +95,11 @@
   "dataset_sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89",
   "artifacts": {
     "code": [
-      "scripts/eeat_score.py",
+      "scripts/get_data.py",
       "scripts/hash_utils.py",
       "scripts/make_figures.py",
       "scripts/make_run.py",
       "scripts/multiseed_mlp.py",
-      "scripts/quality_checks.py",
       "scripts/run_experiment.py",
       "scripts/verify_original_priorshift_bug.py"
     ],
@@ -148,5 +147,5 @@
     ],
     "note": "creditcard.csv is not committed (144 MB); integrity anchored by dataset_sha256"
   },
-  "notes": "re-seal after human review: figs 3/4 aligned to primary regime, paper corrections (98.9->99.2, prior-shift operating point declared), embedded figures"
+  "notes": "publication repo run contract: code+results of the replication package"
 }
