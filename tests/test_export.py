@@ -1,6 +1,7 @@
 """Export-contract smoke tests (audit finding A15): the published DOCX must obey
 the house pagination/keep-together contract and carry no confidential strings."""
 
+import base64
 import re
 import zipfile
 from pathlib import Path
@@ -41,11 +42,16 @@ def test_hanging_indent_in_style():
     assert m and 'w:hanging="720"' in m.group(0)
 
 
+# denylist kept base64-encoded so this public test file never carries the
+# forbidden strings itself (they must not appear anywhere in the artifact)
+_FORBIDDEN = [base64.b64decode(s).decode() for s in ("QUdUVQ==", "QW1lcmljYW4gR2xvYmFs")]
+
+
 def test_no_confidential_strings_anywhere():
     with zipfile.ZipFile(DOCX) as z:
         for name in z.namelist():
             blob = z.read(name).decode("utf-8", "ignore")
-            assert "AGTU" not in blob and "American Global" not in blob, name
+            assert not any(s in blob for s in _FORBIDDEN), name
 
 
 def test_figures_numbered_in_mention_order():
