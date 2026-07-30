@@ -1,0 +1,25 @@
+Operating-Point Dominance in Credit-Card Fraud Detection — replication package
+Copyright 2026 Carlos Ulisses Flores, Codex Hash Research Laboratory.
+
+This repository is dual-licensed:
+
+  * Source code (scripts/, tests/, run_all.py) — Apache License 2.0.
+    See LICENSE and LICENSES/Apache-2.0.txt.
+
+  * Paper text and figures (docs/paper/*, output/figures/*) — Creative Commons
+    Attribution 4.0 International (CC BY 4.0). See LICENSES/CC-BY-4.0.txt.
+
+Third-party data — NOT redistributed here:
+
+  The creditcard.csv benchmark (284,807 transactions) is maintained by the
+  Machine Learning Group of the Université Libre de Bruxelles in collaboration
+  with Worldline, and distributed via Kaggle. It is NOT included in this
+  package. scripts/get_data.py fetches it from its public source and verifies
+  the SHA-256 recorded in configs/run.json and in the run manifest, aborting on
+  mismatch — so the data-to-results chain stays verifiable without this
+  repository redistributing third-party material. The dataset remains under the
+  terms of its original distributor; cite Dal Pozzolo (2015) and ULB/Worldline
+  (2013) as the paper's reference list does.
+
+The derived outputs in output/ (results.json, scores, tables, figures) are
+products of this code over that data and fall under the licensing above.

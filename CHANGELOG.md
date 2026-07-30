@@ -21,6 +21,16 @@ Primeira publicação do pacote de replicação e do artigo.
   selado** (o manifest cobre scripts, configs e saídas).
 - `CHANGELOG.md` (este arquivo).
 - `version: 1.0.0` em `.zenodo.json`.
+- `REPRODUCIBILITY.md` — o que cada selo prova (dado **externo e fixado** por SHA-256 vs.
+  derivação **reproduzível**), o escopo honesto do determinismo (bit-a-bit **na mesma
+  plataforma**; entre plataformas o que se afirma são sinais, ordenações e conclusões de
+  intervalo), a verificação sem re-rodar nada, e o que não é corrigível dentro do pacote.
+- `requirements.lock` — fechamento transitivo completo do ambiente do run selado (31 pacotes),
+  gerado **verbatim** de `environment.pip_freeze` no `manifest.json`, sem edição à mão.
+- `NOTICE` — atribuição Apache-2.0 §4(d), duplo licenciamento e atribuição do dataset
+  ULB/Worldline (não redistribuído).
+- `LICENSES/Apache-2.0.txt` (idêntico ao `LICENSE`) e `LICENSES/CC-BY-4.0.txt` — materializam o
+  duplo licenciamento que já era declarado nos badges, no README e no texto do artigo.
 
 ### Corrigido
 
@@ -30,7 +40,9 @@ Primeira publicação do pacote de replicação e do artigo.
   (`<pic:cNvPr>`) recebe o caminho mesmo com alt preenchido. Corrigido nas duas pontas — alt
   text em todas as imagens **e** caminho relativo para a logo. Verificado por varredura do
   `.docx` como zip: zero ocorrências de `/Users/` e `research-lab`.
-- Badge de testes: `18/18` → **`24/24`** (número real da suíte).
+- Badge de testes: `18/18` → **`24/24`** (número real da suíte) — e as **duas menções obsoletas
+  a "18 invariants"** que sobraram no corpo do README (*Quick start* e *Layout*), que
+  contradiziam o próprio badge.
 - Bloco BibTeX do README: removido o texto *"Zenodo DOI to be minted"* (placeholder); a
   entrada passa a apontar a URL do repositório. O DOI entra na versão seguinte, após o mint.
 - Nome do repositório propagado para `CITATION.cff`, `.zenodo.json`, `codemeta.json` e
@@ -46,6 +58,12 @@ qualquer um deles fora de um re-run quebra a cadeia dados→resultados. Ficam pa
 - Mirror morto (`datahub.io`, HTTP 404) na lista de `scripts/get_data.py`; o mirror primário
   responde 200 e o script os tenta em ordem, então a replicação não é afetada. Documentado no
   README em vez de corrigido no arquivo selado.
+- `scripts/make_run.py` grava o repositório de autoria em `git.repository_url` de forma fixa, de
+  modo que o registro selado do run nomeia o repositório privado e o caminho interno onde o
+  experimento foi executado em 2026-07-04. É a proveniência literal do selo, preservada como
+  está em vez de reescrita depois do fato — reescrever o manifest para esconder onde o trabalho
+  foi feito seria adulterar o registro. Do próximo run em diante o campo passa a apontar este
+  repositório público.
 
 ### Pendente de publicação (human-gated)
 

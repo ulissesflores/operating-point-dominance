@@ -48,8 +48,11 @@ operating point.*
 python3.11 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python run_all.py            # downloads+verifies data, runs the experiment, figures, manifest
-pytest tests/ -q             # 18 data/protocol/results invariants
+pytest tests/ -q             # 24 data/protocol/results/export invariants
 ```
+
+What the seals prove, the honest scope of the determinism claim, and what cannot
+be changed without a re-run: [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md).
 
 ## Five-step replication protocol
 
@@ -94,10 +97,12 @@ docs/paper/       paper-final.pdf + paper-final.docx (APA 7, Portuguese)
 docs/source/      archival v3.2 notebook of the precedent study (SHA-256 131b5af0...)
 configs/run.json  every hyperparameter and protocol contract
 scripts/          experiment, multiseed, forensics, figures, manifest, hashing
-tests/            18 invariants (data, anti-leakage protocol, results)
+tests/            24 invariants (data, anti-leakage protocol, results, export)
 output/           results.json, raw scores (npz), CSV tables, PDF+SVG+PNG figures
 runs/<id>/        manifest.json + checksums.sha256 (run contract)
 schema/           manifest and dataset schemas
+LICENSES/         Apache-2.0 (code) + CC-BY-4.0 (paper, figures) full texts
+requirements.lock full environment of the sealed run (31 packages, verbatim)
 ```
 
 ## Citation
