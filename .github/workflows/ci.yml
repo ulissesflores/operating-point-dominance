@@ -1,0 +1,49 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    name: tests + sealed-run integrity
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Syntax check
+        run: python -m compileall -q scripts tests
+      - name: Test suite
+        run: python -m pytest tests/ -q
+      # The run manifest seals every script and output of the published run. Any
+      # edit to a sealed file without a re-run breaks the chain — this check is
+      # what makes that failure loud instead of silent.
+      # The dataset itself is sealed separately (checksums-data.sha256) and is NOT
+      # redistributed, so this manifest covers only files present in the repo.
+      - name: Sealed-run integrity (scripts, configs, outputs)
+        run: sha256sum -c runs/20260704T204343Z/checksums.sha256
+
+  quality:
+    # Declared debt, reported not enforced: docstring coverage is 50% (41/82) and
+    # ruff flags 13 findings, all inside scripts sealed by the run manifest — they
+    # cannot be fixed without invalidating the published run. Both are scheduled
+    # for the next re-run; failing CI on them would only invite a chain-breaking fix.
+    name: lint + docstrings (informational)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install ruff interrogate
+      - run: ruff check scripts tests
+      - run: interrogate -vv scripts

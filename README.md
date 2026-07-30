@@ -5,7 +5,7 @@
 [![License: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue.svg)](LICENSE)
 [![License: CC BY 4.0](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-18%2F18-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-24%2F24-brightgreen.svg)](tests/)
 
 *A confirmatory, auditable case study on the ULB/Worldline benchmark: how much of a fraud
 detector's operational performance comes from the architecture — and how much from the
@@ -55,6 +55,12 @@ pytest tests/ -q             # 18 data/protocol/results invariants
 
 1. `python scripts/get_data.py` — downloads `creditcard.csv` (public mirror) and **verifies
    its SHA-256** against the original study's hash; aborts on mismatch.
+   > **Mirror status (probed 2026-07-29).** Of the two mirrors listed in the script, the Google
+   > Cloud Storage one answers `200`; `datahub.io` answers `404` and is a dead fallback. The
+   > script tries them in order, so replication is unaffected. The dead entry is **left in place
+   > on purpose**: `scripts/get_data.py` is sealed by `runs/20260704T204343Z/checksums.sha256`,
+   > and editing it would break the run manifest without re-running the experiment. It is fixed
+   > in the next re-run, not by an out-of-band edit.
 2. `python scripts/run_experiment.py` — full protocol (4 models, 2 threshold regimes,
    paired bootstrap, closed-form prior-shift) → `output/results.json`.
 3. `python scripts/verify_original_priorshift_bug.py` — forensic replay of both stress-test
@@ -104,7 +110,8 @@ schema/           manifest and dataset schemas
   title  = {O limiar importa mais que o modelo: domin{\^a}ncia do ponto de
             opera{\c c}{\~a}o na detec{\c c}{\~a}o de fraude em cart{\~o}es},
   year   = {2026},
-  note   = {Codex Hash Research Laboratory. Zenodo DOI to be minted},
+  note   = {Codex Hash Research Laboratory},
+  url    = {https://github.com/ulissesflores/operating-point-dominance},
 }
 ```
 

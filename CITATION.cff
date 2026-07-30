@@ -10,7 +10,7 @@ authors:
 version: "1.0.0"
 date-released: "2026-07-04"
 # doi: PREENCHER após o mint no Zenodo (concept DOI) — não publicar sem este campo real
-repository-code: "https://github.com/ulissesflores/fraud-detection-mlp-operating-point"
+repository-code: "https://github.com/ulissesflores/operating-point-dominance"
 license: Apache-2.0
 keywords:
   - fraud detection

@@ -1,5 +1,5 @@
 [project]
-name = "fraud-detection-mlp-operating-point"
+name = "operating-point-dominance"
 version = "1.0.0"
 description = "Replication package: operating-point dominance in credit-card fraud detection (ULB/Worldline benchmark)"
 authors = [{ name = "Carlos Ulisses Flores" }]

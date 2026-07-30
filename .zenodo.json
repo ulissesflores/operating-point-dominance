@@ -9,6 +9,7 @@
     }
   ],
   "upload_type": "software",
+  "version": "1.0.0",
   "access_right": "open",
   "license": "Apache-2.0",
   "keywords": [
@@ -25,7 +26,7 @@
   "related_identifiers": [
     {
       "relation": "isSupplementTo",
-      "identifier": "https://github.com/ulissesflores/fraud-detection-mlp-operating-point",
+      "identifier": "https://github.com/ulissesflores/operating-point-dominance",
       "resource_type": "software"
     }
   ],

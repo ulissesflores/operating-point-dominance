@@ -32,7 +32,7 @@ def test_keep_together_applied():
 def test_bibliography_style_no_bullets():
     doc = _xml("word/document.xml")
     refs = doc[doc.find("Referências"):]
-    assert refs.count('w:val="Bibliography"') == 39
+    assert refs.count('w:val="Bibliography"') == 40  # 39 + auto-referência Flores (2026)
     assert "<w:numPr>" not in refs
 
 
