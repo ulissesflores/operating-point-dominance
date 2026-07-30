@@ -7,9 +7,12 @@ authors:
     given-names: "Carlos Ulisses"
     orcid: "https://orcid.org/0000-0002-6034-7765"
     affiliation: "Codex Hash Research Laboratory, Codex Hash Ltda., Brazil"
-version: "1.0.0"
+version: "1.0.1"
 date-released: "2026-07-30"
-# doi: PREENCHER após o mint no Zenodo (concept DOI) — não publicar sem este campo real
+# doi is the Zenodo concept (umbrella) DOI 10.5281/zenodo.21708708 — it always resolves to
+# the latest deposited version, so it stays correct as versions are added. Release 1.0.0 was
+# archived as Version DOI 10.5281/zenodo.21708709; each later release gets its own.
+doi: "10.5281/zenodo.21708708"
 repository-code: "https://github.com/ulissesflores/operating-point-dominance"
 license: Apache-2.0
 keywords:
@@ -28,6 +31,6 @@ preferred-citation:
       orcid: "https://orcid.org/0000-0002-6034-7765"
       affiliation: "Codex Hash Research Laboratory, Codex Hash Ltda., Brazil"
   year: 2026
+  doi: "10.5281/zenodo.21708708"
   languages:
     - pt
-  # doi: PREENCHER após o mint no Zenodo

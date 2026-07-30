@@ -1,7 +1,6 @@
 # Operating-Point Dominance in Credit-Card Fraud Detection
 
-<!-- Zenodo DOI badge: insert after minting (Wave 2) -->
-<!-- [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.TBD.svg)](https://doi.org/10.5281/zenodo.TBD) -->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21708708.svg)](https://doi.org/10.5281/zenodo.21708708)
 [![License: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue.svg)](LICENSE)
 [![License: CC BY 4.0](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](pyproject.toml)
@@ -107,7 +106,10 @@ requirements.lock full environment of the sealed run (31 packages, verbatim)
 
 ## Citation
 
-<!-- After minting the Zenodo DOI, update CITATION.cff and the BibTeX below. -->
+Cite the project's Zenodo DOI —
+[`10.5281/zenodo.21708708`](https://doi.org/10.5281/zenodo.21708708), the concept
+(all-versions) DOI that always resolves to the latest release. The Version DOI of
+release 1.0.0 is [`10.5281/zenodo.21708709`](https://doi.org/10.5281/zenodo.21708709).
 
 ```bibtex
 @misc{flores2026operatingpoint,
@@ -116,6 +118,7 @@ requirements.lock full environment of the sealed run (31 packages, verbatim)
             opera{\c c}{\~a}o na detec{\c c}{\~a}o de fraude em cart{\~o}es},
   year   = {2026},
   note   = {Codex Hash Research Laboratory},
+  doi    = {10.5281/zenodo.21708708},
   url    = {https://github.com/ulissesflores/operating-point-dominance},
 }
 ```

@@ -4,7 +4,43 @@ All notable changes to this replication package are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] — não lançada (aguardando sign-off do operador)
+## [1.0.1] — 2026-07-30
+
+Backfill do DOI cunhado. Esta é a **versão superseding** prevista pela dança de duas releases
+(`metodo/regras/cunhagem-doi-zenodo.md`): é nela que o DOI entra **no próprio artigo**, o que a
+regra permite exatamente por ser uma versão nova, e não uma re-selagem sob o mesmo DOI.
+**Nenhum artefato selado pelo manifest é tocado** — `docs/paper/` não está entre os 37 arquivos de
+`runs/20260704T204343Z/checksums.sha256`, e a cadeia foi reconferida com **0 falhas** depois do
+re-export.
+
+### Adicionado
+
+- **Concept DOI `10.5281/zenodo.21708708`** (umbrella; resolve sempre para a versão mais
+  recente) em `CITATION.cff` (`doi` e `preferred-citation.doi`), `codemeta.json`
+  (`identifier`), badge e seção *Citation* do `README.md`, e no bloco BibTeX.
+- Version DOI da release 1.0.0 (`10.5281/zenodo.21708709`) registrado no README como âncora
+  de proveniência da release.
+- **O DOI na auto-referência do artigo**, no formato do precedente publicado: `… Codex Hash
+  Research Laboratory. Zenodo. https://doi.org/10.5281/zenodo.21708708. Repositório de código:
+  …`. O artigo foi re-exportado (DOCX + PDF), mantendo as **31 páginas**, com varredura de leak
+  limpa nos 50 streams do PDF e no DOCX como zip, e os **24 testes** verdes — inclusive
+  `test_export.py`, que valida o DOCX publicado.
+
+### Corrigido
+
+- `version` subiu para `1.0.1` em `CITATION.cff`, `.zenodo.json`, `codemeta.json` e
+  `pyproject.toml` — é a 1.0.1 que o Zenodo arquiva nesta release, e o metadado precisa dizer
+  isso.
+
+### Nota de manutenção (armadilha encontrada nesta versão)
+
+A lista de referências existe em **dois lugares**: o `docs/paper/paper-final.md` canônico e, em
+forma APA-7 já montada, dentro de `scripts/make_apa7_export.py` — que é quem de fato gera o
+artigo. Editar só o Markdown canônico **não muda o artefato publicado**, e a primeira tentativa
+de inserir o DOI foi silenciosamente perdida por causa disso (o PDF saiu sem o DOI). Quem
+alterar referência precisa alterar os dois, ou o export mente sobre a fonte.
+
+## [1.0.0] — 2026-07-30
 
 Primeira publicação do pacote de replicação e do artigo.
 
@@ -65,9 +101,9 @@ qualquer um deles fora de um re-run quebra a cadeia dados→resultados. Ficam pa
   foi feito seria adulterar o registro. Do próximo run em diante o campo passa a apontar este
   repositório público.
 
-### Pendente de publicação (human-gated)
+### Publicação
 
-Push, release e mint do DOI Zenodo exigem sign-off do operador. Após o mint, o DOI é inserido
-apenas em metadado **não selado** (`CITATION.cff`, `.zenodo.json`, badge do README) na versão
-`1.0.1`, sem re-selar o artigo — a dança de duas releases descrita em
-`metodo/regras/cunhagem-doi-zenodo.md`.
+Push, tag `v1.0.0` e release executados em 2026-07-30 com sign-off do operador. O webhook do
+Zenodo cunhou o Version DOI `10.5281/zenodo.21708709` e o Concept DOI
+`10.5281/zenodo.21708708`. O artigo desta versão sela com a **URL do repositório** (sem
+placeholder de DOI); o DOI entra em metadado não selado na `1.0.1`.
