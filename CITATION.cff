@@ -8,7 +8,7 @@ authors:
     orcid: "https://orcid.org/0000-0002-6034-7765"
     affiliation: "Codex Hash Research Laboratory, Codex Hash Ltda., Brazil"
 version: "1.0.0"
-date-released: "2026-07-04"
+date-released: "2026-07-30"
 # doi: PREENCHER após o mint no Zenodo (concept DOI) — não publicar sem este campo real
 repository-code: "https://github.com/ulissesflores/operating-point-dominance"
 license: Apache-2.0
