@@ -1,6 +1,6 @@
 [project]
 name = "operating-point-dominance"
-version = "1.0.1"
+version = "1.1.0"
 description = "Replication package: operating-point dominance in credit-card fraud detection (ULB/Worldline benchmark)"
 authors = [{ name = "Carlos Ulisses Flores" }]
 requires-python = ">=3.11,<3.12"

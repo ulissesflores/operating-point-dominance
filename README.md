@@ -4,14 +4,14 @@
 [![License: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue.svg)](LICENSE)
 [![License: CC BY 4.0](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-24%2F24-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-33%2F33-brightgreen.svg)](tests/)
 
 *A confirmatory, auditable case study on the ULB/Worldline benchmark: how much of a fraud
 detector's operational performance comes from the architecture — and how much from the
 operating point.*
 
-**Paper (Portuguese, APA 7):** [`docs/paper/paper-final.pdf`](docs/paper/paper-final.pdf) ·
-[`docs/paper/paper-final.docx`](docs/paper/paper-final.docx)
+**Paper (APA 7), two editions of the same study — same data, same numbers:**
+**Portuguese** [`docs/paper/paper-final.pdf`](docs/paper/paper-final.pdf) · [`.docx`](docs/paper/paper-final.docx) — **English** [`docs/paper/paper-final-en.pdf`](docs/paper/paper-final-en.pdf) · [`.docx`](docs/paper/paper-final-en.docx)
 
 ## What this contributes
 
@@ -47,7 +47,7 @@ operating point.*
 python3.11 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python run_all.py            # downloads+verifies data, runs the experiment, figures, manifest
-pytest tests/ -q             # 24 data/protocol/results/export invariants
+pytest tests/ -q             # 33 data/protocol/results/export/metadata invariants
 ```
 
 What the seals prove, the honest scope of the determinism claim, and what cannot
@@ -92,11 +92,11 @@ inside the MLP's own distribution). Full numbers in [`output/results.json`](outp
 ## Layout
 
 ```
-docs/paper/       paper-final.pdf + paper-final.docx (APA 7, Portuguese)
+docs/paper/       paper-final.{pdf,docx} (APA 7, PT) + paper-final-en.{pdf,docx} (EN)
 docs/source/      archival v3.2 notebook of the precedent study (SHA-256 131b5af0...)
 configs/run.json  every hyperparameter and protocol contract
 scripts/          experiment, multiseed, forensics, figures, manifest, hashing
-tests/            24 invariants (data, anti-leakage protocol, results, export)
+tests/            33 invariants (data, anti-leakage protocol, results, export, metadata)
 output/           results.json, raw scores (npz), CSV tables, PDF+SVG+PNG figures
 runs/<id>/        manifest.json + checksums.sha256 (run contract)
 schema/           manifest and dataset schemas

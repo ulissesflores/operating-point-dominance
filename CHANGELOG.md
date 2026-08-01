@@ -4,6 +4,60 @@ All notable changes to this replication package are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] — 2026-08-01
+
+Duas mudanças de fundo: a capa deixa de carregar um vínculo institucional que não pertence a este
+artefato público, e o pacote passa a publicar o artigo **em duas edições** — português e inglês —
+lado a lado. **Nenhum arquivo selado pelo manifest é tocado:** a cadeia de
+`runs/20260704T204343Z/checksums.sha256` foi reconferida com **0 falhas** depois de tudo, e as
+figuras em inglês são geradas por um script **não selado** que escreve num diretório **não selado**
+(`output/figures-en/`), respeitando o invariante de replicação.
+
+### Corrigido
+
+- **Capa: removida a linha de vínculo acadêmico** e a afiliação passou a ser
+  `Codex Hash Research Laboratory` (a forma canônica do perfil). Este é o motivo da versão: o DOCX
+  e o PDF da 1.0.1 carregavam a titulação, que é confidencial e não pertence a um artefato público.
+  A suíte de testes passou a **barrar as duas grafias** (PT e EN) em qualquer membro do DOCX, de
+  modo que a regressão não pode voltar sem quebrar o CI.
+
+### Adicionado
+
+- **Edição em inglês do artigo** — `docs/paper/paper-final-en.pdf` e `.docx` (29 páginas, APA 7).
+  Mesmos dados, mesmos números, mesma tese: o multiconjunto de números do corpo PT e do corpo EN é
+  **idêntico** (665 números, verificado por código, com os separadores normalizados), e as 39
+  URLs/DOIs também. Os títulos das duas auto-citações (Flores, 2025 e Flores, 2026) entram **em
+  português, verbatim**, com glosa em inglês entre colchetes: o depósito Zenodo é imutável e traduzir
+  o título ali seria citar uma obra que não existe.
+- **Figuras em inglês sem re-executar o experimento** — `scripts/make_figures_en.py` importa o
+  `make_figures.py` selado e traduz os rótulos no caminho para o matplotlib, lendo os mesmos insumos
+  selados e escrevendo em `output/figures-en/`. Nenhum byte selado muda.
+- **Pipeline de export por idioma** — `scripts/build_export.sh [pt-BR|en]`. As quebras de página
+  passaram a ser lidas do contrato da casa por idioma, em vez de uma lista fixa em português, e a
+  língua de revisão do DOCX passa a `en-US` na edição inglesa.
+- **Cobertura de testes nas duas edições** — o contrato de export era verificado só no artefato PT;
+  agora roda nos dois (6 -> 13 testes), incluindo um teste de que as duas edições são documentos
+  genuinamente distintos. Somado ao novo `tests/test_metadata.py`, a suíte vai de **24 a 33**.
+- **Aviso de reprodutibilidade que faltava** — `REPRODUCIBILITY.md` agora explica que **um re-run
+  legítimo também derruba o `sha256sum -c`** (15 dos 37, todos arquivos de figura, por causa de
+  `/CreationDate`, `<dc:date>` e IDs aleatórios do matplotlib) e ensina a conferir por conteúdo
+  depois de re-rodar. Sem isso, quem replica lê 15 `FAILED` e conclui adulteração.
+- **Trava contra release meio-feita** — `tests/test_metadata.py` assere que a versão é a mesma em
+  `CITATION.cff`, `.zenodo.json`, `codemeta.json` e `pyproject.toml`, e que ela concorda com o
+  CHANGELOG (enquanto o topo estiver `Unreleased`, o metadado tem de continuar na última versão
+  publicada). Bumpar três dos quatro publicaria um depósito Zenodo — **imutável** — exibindo a
+  versão errada.
+
+### Dívida declarada (nova)
+
+- **O slug do projeto com data (`2025-fraud-detection-mlp`) está dentro do registro selado** —
+  `runs/20260704T204343Z/manifest.json` e `scripts/make_run.py`. Corrigir exigiria re-executar o
+  experimento inteiro, e a re-execução foi medida: **742 de 743 campos** de `output/results.json`
+  saem idênticos (o único que muda é `runtime_seconds`, tempo de parede) e os 7 PNG são
+  bit-idênticos. Ou seja, o re-run compraria cosmética de nome ao preço de re-selar a cadeia toda.
+  O nome com data fica registrado aqui como o que era verdade na execução de 2026-07-04; o campo
+  passa a refletir o nome definitivo **a partir do próximo run**.
+
 ## [1.0.1] — 2026-07-30
 
 Backfill do DOI cunhado. Esta é a **versão superseding** prevista pela dança de duas releases

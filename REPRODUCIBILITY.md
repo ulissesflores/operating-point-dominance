@@ -26,6 +26,21 @@ outputs. Any edit to a sealed file without a fresh run makes this fail loudly.
 The same check runs in CI on every push (`.github/workflows/ci.yml`), together
 with the test suite and a syntax pass.
 
+> **A legitimate re-run also makes this check fail — and that is not tampering.**
+> Re-executing the pipeline rewrites the figure files, and PDF/SVG carry a
+> creation timestamp (`/CreationDate`, `<dc:date>`) plus randomly generated
+> matplotlib element IDs. A full re-run on this machine reported **15 of the 37
+> as FAILED**, all of them figure files, with **zero** change in content: the 7
+> PNGs stayed bit-identical, `output/results.json` differed in exactly one field
+> out of 743 (`runtime_seconds`, wall-clock), and once the timestamp and the
+> random IDs are normalised, 20 of the 21 vector files match byte for byte (the
+> 21st only in the `id="image…"` attributes of its rasterised insets).
+>
+> So: run `sha256sum -c` **against the published artifact** to verify what was
+> released. After your own re-run, compare *content* instead — `output/results.json`
+> field by field (ignoring `runtime_seconds`) and the PNGs by hash. Reading 15
+> `FAILED` lines as evidence of a doctored package would be the wrong conclusion.
+
 ## Determinism: the honest scope
 
 Re-running steps 2–5 of the protocol **on the same platform** reproduces every
@@ -54,14 +69,15 @@ the suite on Linux under Python 3.11 and 3.12.
 Cost note: step 4 of the protocol (`multiseed_mlp.py --n-seeds 20`) is the
 expensive one, ~25 min CPU, and is opt-in — `run_all.py` skips it unless asked.
 
-## Test suite — 24 invariants
+## Test suite — 33 invariants
 
 | File | Tests | Covers |
 |---|---|---|
 | `tests/test_data.py` | 3 | dataset SHA-256 anchor, shape and prevalence, column set |
 | `tests/test_protocol.py` | 5 | split sizes and stratification, scaler fit on train only, `pos_weight` = class ratio, no SMOTE anywhere — the leakage classes are excluded by construction, and the tests assert it |
 | `tests/test_results.py` | 10 | the thesis itself: threshold swing dominates, uncensored gap is a tie within noise, the censored-grid artifact, bootstrap block complete, closed-form prior shift vs. Monte Carlo, confusion matrices consistent with the reported metrics |
-| `tests/test_export.py` | 6 | published-DOCX contract: page breaks, keep-together, bibliography style and hanging indent, no confidential strings, figures numbered in mention order |
+| `tests/test_metadata.py` | 2 | the version agrees across `CITATION.cff`, `.zenodo.json`, `codemeta.json` and `pyproject.toml`, and with the CHANGELOG — a three-of-four bump would ship an **immutable** Zenodo deposit showing the wrong version |
+| `tests/test_export.py` | 13 | published-DOCX contract, checked on **both editions** (PT-BR and EN): page breaks, keep-together, bibliography style and hanging indent, no confidential strings — including the academic affiliation removed in 1.1.0 — figures numbered in mention order, and that the two editions are genuinely different documents |
 
 ## What cannot be fixed inside this package
 

@@ -6,7 +6,7 @@
   "description": "Replication package for the paper 'O limiar importa mais que o modelo: dominância do ponto de operação na detecção de fraude em cartões' — auditable, leakage-free, deterministic protocol on the ULB/Worldline benchmark.",
   "codeRepository": "https://github.com/ulissesflores/operating-point-dominance",
   "license": "https://spdx.org/licenses/Apache-2.0",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "dateCreated": "2026-07-04",
   "datePublished": "2026-07-30",
   "programmingLanguage": {
