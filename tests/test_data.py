@@ -1,5 +1,8 @@
-"""Data-integrity gates: the dataset on disk must be byte-identical to the one
-the original v3.2 run hashed, and its shape/prevalence must match the paper."""
+"""Data-integrity gates for the dataset the published run consumed.
+
+The file on disk must be byte-identical to the one the original v3.2 run hashed,
+and its shape and prevalence must match what the paper reports.
+"""
 
 import hashlib
 import json

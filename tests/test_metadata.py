@@ -22,8 +22,10 @@ def _versions() -> dict[str, str]:
     return {
         "CITATION.cff": cff.group(1).strip(),
         "pyproject.toml": pyproject.group(1),
-        ".zenodo.json": json.loads((ROOT / ".zenodo.json").read_text(encoding="utf-8"))["version"],
-        "codemeta.json": json.loads((ROOT / "codemeta.json").read_text(encoding="utf-8"))["version"],
+        ".zenodo.json": json.loads(
+            (ROOT / ".zenodo.json").read_text(encoding="utf-8"))["version"],
+        "codemeta.json": json.loads(
+            (ROOT / "codemeta.json").read_text(encoding="utf-8"))["version"],
     }
 
 

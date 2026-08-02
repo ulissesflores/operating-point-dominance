@@ -17,12 +17,24 @@ ROOT = Path(__file__).resolve().parent
 
 
 def run(script: str, *args: str, cwd: Path = ROOT) -> None:
+    """Run one pipeline step and abort the whole replication if it fails.
+
+    Parameters
+    ----------
+    script : str
+        File name inside ``scripts/``.
+    *args : str
+        Arguments forwarded to that script.
+    cwd : Path, optional
+        Working directory for the subprocess.
+    """
     cmd = [sys.executable, str(ROOT / "scripts" / script), *args]
     print(f"\n=== {script} {' '.join(args)}")
     subprocess.run(cmd, check=True, cwd=cwd)
 
 
 def main() -> None:
+    """Replicate the published run end to end, in the documented order."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--with-multiseed", action="store_true")
     args = parser.parse_args()

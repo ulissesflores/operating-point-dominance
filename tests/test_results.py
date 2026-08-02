@@ -1,5 +1,8 @@
-"""Results-contract tests: every quantitative claim family the paper makes must
-hold in output/results.json (numbers in prose == numbers in the run)."""
+"""Results contract: the paper's numbers are assertions, not prose.
+
+Every quantitative claim family the paper makes must hold in output/results.json —
+numbers in the prose equal numbers in the run, or the suite fails.
+"""
 
 import json
 from pathlib import Path
@@ -25,8 +28,11 @@ def _metric(results, model):
 
 
 def test_thesis_threshold_swing_dominates(results):
-    """Core claim: the F1 swing from fixing the operating point is an order of
-    magnitude larger than the architecture gap, in BOTH threshold regimes."""
+    """The operating-point swing dominates the architecture gap.
+
+    Core claim: the F1 swing from fixing the operating point is an order of magnitude
+    larger than the architecture gap, in BOTH threshold regimes.
+    """
     mlp_05 = _metric(results, "MLP_test@0.5")["f1"]
     mlp_unc = _metric(results, "MLP_test@t*unc")["f1"]
     lr_unc = _metric(results, "LR_test@t*unc")["f1"]
@@ -37,8 +43,11 @@ def test_thesis_threshold_swing_dominates(results):
 
 
 def test_uncensored_gap_is_tie_within_noise(results):
-    """Primary analysis: the paired-bootstrap CI of delta-F1 (uncensored thresholds)
-    must include zero (the tie claim), and so must delta-AUC-PR."""
+    """The uncensored gap is a tie within noise.
+
+    Primary analysis: the paired-bootstrap CI of delta-F1 (uncensored thresholds) must
+    include zero — the tie claim — and so must delta-AUC-PR.
+    """
     b = results["bootstrap_mlp_vs_lr_test"]["uncensored_primary"]
     lo, hi = b["delta_f1_ci"]
     assert lo < 0 < hi, f"delta F1 CI excludes zero: [{lo}, {hi}]"
@@ -47,8 +56,11 @@ def test_uncensored_gap_is_tie_within_noise(results):
 
 
 def test_censored_artifact_documented(results):
-    """The censored-grid variant (v3.2 fidelity) must exist so the paper can show
-    that the apparent 'significant MLP win' is a grid-censoring artifact."""
+    """The censored-grid artifact stays on the record.
+
+    The v3.2 fidelity variant must exist so the paper can show that the apparent
+    "significant MLP win" is a grid-censoring artifact.
+    """
     b = results["bootstrap_mlp_vs_lr_test"]["censored_v32_grid"]
     lo, hi = b["delta_f1_ci"]
     assert lo > 0, "expected the censored-grid delta to (spuriously) exclude zero"

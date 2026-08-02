@@ -10,6 +10,13 @@
 detector's operational performance comes from the architecture — and how much from the
 operating point.*
 
+> [!IMPORTANT]
+> **Finding.** On the ULB/Worldline benchmark, the decision threshold moves operational F1 by
+> **+0.545** (0.267 -> 0.812) while switching model family moves **−0.007**
+> (95% paired-bootstrap CI [−0.055, +0.042]) — indistinguishable from zero and smaller than the
+> MLP's own training standard deviation across 20 seeds (0.016). Two orders of magnitude apart,
+> on the same data, under the same protocol.
+
 **Paper (APA 7), two editions of the same study — same data, same numbers:**
 **Portuguese** [`docs/paper/paper-final.pdf`](docs/paper/paper-final.pdf) · [`.docx`](docs/paper/paper-final.docx) — **English** [`docs/paper/paper-final-en.pdf`](docs/paper/paper-final-en.pdf) · [`.docx`](docs/paper/paper-final-en.docx)
 
@@ -89,6 +96,38 @@ Re-running steps 2–5 on the same platform reproduces every number bit-for-bit
 indistinguishable from zero. MLP across 20 seeds: 0.814 ± 0.016 (the deterministic LR falls
 inside the MLP's own distribution). Full numbers in [`output/results.json`](output/results.json).
 
+## What is and isn't claimed
+
+**Claimed.** On this benchmark, under this protocol: the operating point dominates the model
+family by two orders of magnitude; the apparent MLP win under the censored grid is a protocol
+artifact with a mechanical explanation; the precedent material's prevalence-robustness test is
+refuted by a resampling defect; and the whole pipeline is deterministic and bit-reproducible on
+the documented platform.
+
+**Not claimed.** Nothing about "fraud detection in general". This is a single dataset, two days
+of 2013, PCA-anonymised, with **74 positives in the test split** — the intervals are wide, and
+absence of evidence of an architecture difference is **not** evidence of equivalence: a real gap
+of up to ±0.05 in F1 is compatible with these data. No temporal split is used, so nothing here
+speaks to deployment under drift. Cross-platform numerical identity is **not** claimed; the
+cross-platform observation (n=2) is reported as an illustration, not a result.
+
+**Frozen.** The dataset is external and pinned by SHA-256, not redistributed here. The seven
+scripts, the configs and the outputs of the published run are sealed by
+`runs/20260704T204343Z/checksums.sha256`; declared debt is fixed by re-running the experiment,
+never by an out-of-band edit — see [`CHANGELOG.md`](CHANGELOG.md) and
+[`REPRODUCIBILITY.md`](REPRODUCIBILITY.md).
+
+## Integrity
+
+```bash
+sha256sum -c runs/20260704T204343Z/checksums.sha256    # macOS: shasum -a 256 -c
+```
+
+37 files — the 7 scripts, `configs/run.json`, the run manifest and all 28 outputs. The same check
+runs in CI on every push, in a clean Linux checkout, as a **blocking** job. What it proves, and why
+a legitimate re-run *also* makes it fail (figure metadata, not tampering), is spelled out in
+[`REPRODUCIBILITY.md`](REPRODUCIBILITY.md).
+
 ## Layout
 
 ```
@@ -139,8 +178,10 @@ Machine-readable metadata: [`CITATION.cff`](CITATION.cff) · [`codemeta.json`](c
 - Hand (2006). *Classifier technology and the illusion of progress* — 10.1214/088342306000000060
 - Bouthillier et al. (2021). *Accounting for variance in ML benchmarks* — arXiv:2103.03098
 
-## Contact
+## Author
 
-Carlos Ulisses Flores · Codex Hash Research Laboratory ·
-ORCID [0000-0002-6034-7765](https://orcid.org/0000-0002-6034-7765) ·
-[ulissesflores.com](https://ulissesflores.com)
+**Carlos Ulisses Flores** — Codex Hash Research Laboratory
+
+[![ORCID](https://img.shields.io/badge/ORCID-0000--0002--6034--7765-a6ce39.svg)](https://orcid.org/0000-0002-6034-7765)
+[![Website](https://img.shields.io/badge/web-ulissesflores.com-blue.svg)](https://ulissesflores.com)
+[![Lattes](https://img.shields.io/badge/Lattes-6905246706890561-green.svg)](http://lattes.cnpq.br/6905246706890561)

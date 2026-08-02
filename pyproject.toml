@@ -18,3 +18,27 @@ dev = ["pytest==9.1.1", "ruff"]
 
 [tool.ruff]
 line-length = 100
+
+[tool.ruff.lint]
+# Alvo declarado da casa. O código de scripts/ é SELADO pelo manifest do run: os
+# achados que sobram são dívida declarada (CHANGELOG § declared debt) e só podem ser
+# pagos num re-run — por isso o job de lint do CI é `continue-on-error`. Afrouxar o
+# alvo para o job ficar verde seria mentir sobre o padrão; o alvo fica aqui, honesto.
+select = ["E", "F", "W", "I", "UP", "B", "D"]
+ignore = ["D203", "D213"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.interrogate]
+fail-under = 100
+exclude = ["tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff.lint.per-file-ignores]
+# Testes se documentam pelo nome (`test_no_confidential_strings_anywhere`); exigir
+# docstring em cada um produziria paráfrase do nome — filler, não documentação. O
+# alvo de 100% vale para `scripts/`, que é o código que o replicador lê.
+"tests/*" = ["D103"]

@@ -48,6 +48,20 @@ figuras em inglês são geradas por um script **não selado** que escreve num di
   publicada). Bumpar três dos quatro publicaria um depósito Zenodo — **imutável** — exibindo a
   versão errada.
 
+- **README no padrão de publicação da casa** — callout `> [!IMPORTANT]` com os números-manchete,
+  seção **"What is and isn't claimed"** (o que se afirma, o que **não** se afirma — 74 positivos no
+  teste, ausência de evidência ≠ equivalência, nada sobre "fraude em geral" — e o que está
+  congelado), seção **Integrity** com o comando de verificação, e bloco **Author** com ORCID,
+  site e Lattes.
+- **`ROADMAP.md`** — o que vem depois, com o custo medido na frente: o re-run que paga a dívida
+  declarada de uma vez, o notebook de replicação zero-setup, a validação externa em benchmark com
+  partição temporal, e o que **não** está planejado (entrada em leaderboard, virar biblioteca).
+- **Alvo de lint declarado no `pyproject.toml`** — `ruff` (`E,F,W,I,UP,B,D`, pydocstyle numpy),
+  `interrogate fail-under = 100` e `pytest testpaths`. O código **não selado** (`run_all.py`,
+  `tests/`) foi trazido para o alvo e passa limpo; `scripts/` é selado e continua com a dívida
+  declarada, reportada pelo job informacional. Afrouxar o alvo para o CI ficar verde seria mentir
+  sobre o padrão — o alvo fica no arquivo, honesto.
+
 ### Dívida declarada (nova)
 
 - **O slug do projeto com data (`2025-fraud-detection-mlp`) está dentro do registro selado** —

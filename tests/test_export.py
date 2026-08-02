@@ -1,5 +1,7 @@
-"""Export-contract smoke tests (audit finding A15): every published DOCX must obey
-the house pagination/keep-together contract and carry no confidential strings.
+"""Export contract for every published DOCX (audit finding A15).
+
+Each edition must obey the house pagination/keep-together contract and carry no
+confidential strings.
 
 Since v1.1.0 the package ships TWO editions (PT-BR and EN) side by side, so the
 contract is checked per edition instead of only on the PT one — a regression in the

@@ -1,10 +1,12 @@
-"""Protocol invariants: the leakage-free properties the paper claims must hold
-by construction in the code (split sizes, train-only scaler, cost reweighting)."""
+"""Protocol invariants that make the leakage-free claim checkable.
+
+The properties the paper claims must hold by construction in the code: split sizes,
+train-only scaler, cost reweighting and the absence of synthetic resampling.
+"""
 
 import json
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 import pytest
 
